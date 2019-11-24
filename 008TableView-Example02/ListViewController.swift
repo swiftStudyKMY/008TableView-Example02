@@ -12,6 +12,7 @@ import UIKit
 class ListViewController: UITableViewController {
     var list = [String]()
     
+    //MARK:UIAlertController
     @IBAction func add(_ sender: Any) {
         
         let alert = UIAlertController(title: " 목록입력", message: "추가될 글을 작성해주세요.", preferredStyle: .alert)
@@ -38,4 +39,33 @@ class ListViewController: UITableViewController {
         
     }
     
+    //MARK:numberOfRowsInSection
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.list.count
+    }
+    
+    //MARK:cellForRowAt
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        //1. "cell" 을 찾아 읽는다.
+        //2. 없으면 UITableViewCell 생성한다.
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
+        
+        cell.textLabel?.numberOfLines = 0
+        
+        cell.textLabel?.text = list[indexPath.row]
+        
+        return cell
+        
+    }
+    //MARK:estimatedHeightForRowAt
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        let row = self.list[indexPath.row]
+        
+        //높이 조절
+        //기본 높이 60, 글의 길이가 30자 넘을 경우 (* 20)
+        let height = CGFloat(60 + (row.count/30) * 20)
+        
+        return height
+    }
 }
