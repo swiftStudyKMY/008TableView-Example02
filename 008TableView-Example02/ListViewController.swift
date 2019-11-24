@@ -39,6 +39,21 @@ class ListViewController: UITableViewController {
         
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //estimatedRowHeight
+        //셀 전체의 높이를 결정하기 전에 임시로 사용할 셀의 높이값 세팅
+        self.tableView.estimatedRowHeight = 50
+        
+        //automaticDimension
+        //테이블 뷰의 rowHeight 속성을 대입하여 높이값이 동적으로 설정됨을 테이블 뷰에 알려주는 역할.
+        //rowHeight 속성이 설정 되면 전체 목록이 만들어진 시점에서 셀 내부의 콘텐츠 레이아웃을 계산하고 그에 따라 셀마다 높이값을 재설정함.
+        self.tableView.rowHeight = UITableView.automaticDimension
+    }
+    
     //MARK:numberOfRowsInSection
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.list.count
@@ -58,14 +73,15 @@ class ListViewController: UITableViewController {
         return cell
         
     }
-    //MARK:estimatedHeightForRowAt
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        let row = self.list[indexPath.row]
-        
-        //높이 조절
-        //기본 높이 60, 글의 길이가 30자 넘을 경우 (* 20)
-        let height = CGFloat(60 + (row.count/30) * 20)
-        
-        return height
-    }
+    
+//    //MARK:estimatedHeightForRowAt
+//    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let row = self.list[indexPath.row]
+//
+//        //높이 조절
+//        //기본 높이 60, 글의 길이가 30자 넘을 경우 (* 20)
+//        let height = CGFloat(60 + (row.count/30) * 20)
+//
+//        return height
+//    }
 }
